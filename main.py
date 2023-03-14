@@ -10,7 +10,7 @@ num_files = num_files // 2
 imgs = []
 templates = []
 show_res = True
-AllBlack = True
+AllBlack = False
 imgGood = 0
 imgBad = 0
 for i in range(num_files):
@@ -20,7 +20,7 @@ for i in range(num_files):
     templates.append(template)
 
 
-def image_checker(img_c, template_c):
+def image_checker(img_c, template_c, i):
     global imgBad
     global imgGood
     h, w = template_c.shape[:2]
@@ -38,7 +38,7 @@ def image_checker(img_c, template_c):
                     image_new = cv2.addWeighted(img_c, alpha, result, 1 - alpha, 0)
                     cv2.imshow('Result', image_new)
                     cv2.waitKey(0)
-                cv2.imwrite(f'result/{i}result.png', result)
+                cv2.imwrite(f'result/{i}result.png', image_new)
             else:
                 cv2.rectangle(img_c, pt, (pt[0] + w, pt[1] + h), (0, 0, 255), 2)
                 if show_res:
@@ -52,7 +52,7 @@ def image_checker(img_c, template_c):
 
 def start_check():
     for i in range(num_files):
-        image_checker(imgs[i], templates[i])
+        image_checker(imgs[i], templates[i], i)
     else:
         print(f'На {imgGood} изображении/ях нашлось сходства.\nНа {imgBad} изображении/ях не нашлось сходство.')
 
