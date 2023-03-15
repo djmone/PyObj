@@ -10,7 +10,7 @@ num_files = num_files // 2
 imgs = []
 templates = []
 show_res = True
-AllBlack = False
+AllBlack = True
 imgGood = 0
 imgBad = 0
 for i in range(num_files):
@@ -34,8 +34,8 @@ def image_checker(img_c, template_c, i):
                 alpha = 0.4
                 result = np.zeros_like(img_c)
                 result[mask == 255] = img_c[mask == 255]
+                image_new = cv2.addWeighted(img_c, alpha, result, 1 - alpha, 0)
                 if show_res:
-                    image_new = cv2.addWeighted(img_c, alpha, result, 1 - alpha, 0)
                     cv2.imshow('Result', image_new)
                     cv2.waitKey(0)
                 cv2.imwrite(f'result/{i}result.png', image_new)
